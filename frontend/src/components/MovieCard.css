@@ -1,0 +1,508 @@
+.movie-card {
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.07);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #141519,
+      #0f1013
+    );
+
+  box-shadow:
+    0 10px 35px
+    rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+.movie-card:hover {
+  transform:
+    translateY(-8px);
+
+  border-color:
+    rgba(229, 9, 20, 0.28);
+
+  box-shadow:
+    0 22px 55px
+    rgba(0, 0, 0, 0.45);
+}
+
+
+/* =========================
+   POSTER
+========================= */
+
+.movie-poster-wrapper {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 2 / 3;
+
+  overflow: hidden;
+
+  background: #16171b;
+}
+
+
+.movie-poster {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.45s ease,
+    filter 0.45s ease;
+}
+
+
+.movie-card:hover .movie-poster {
+  transform:
+    scale(1.055);
+
+  filter:
+    brightness(0.68);
+}
+
+
+.poster-overlay {
+  position: absolute;
+  inset: 0;
+
+  opacity: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 30%,
+      rgba(0, 0, 0, 0.2) 55%,
+      rgba(0, 0, 0, 0.92) 100%
+    );
+
+  transition:
+    opacity 0.3s ease;
+
+  pointer-events: none;
+}
+
+
+.movie-card:hover .poster-overlay {
+  opacity: 1;
+}
+
+
+/* =========================
+   RATING BADGE
+========================= */
+
+.movie-rating-badge {
+  position: absolute;
+
+  top: 14px;
+  left: 14px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  padding:
+    7px 10px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.11);
+
+  border-radius: 9px;
+
+  background:
+    rgba(8, 9, 12, 0.75);
+
+  backdrop-filter:
+    blur(10px);
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  z-index: 3;
+}
+
+
+.movie-rating-badge span {
+  color: #ffc107;
+
+  font-size: 13px;
+}
+
+
+/* =========================
+   FAVORITE HEART
+========================= */
+
+.favorite-button {
+  position: absolute;
+
+  top: 14px;
+  right: 14px;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 50%;
+
+  background:
+    rgba(8, 9, 12, 0.75);
+
+  backdrop-filter:
+    blur(10px);
+
+  color: white;
+
+  font-size: 23px;
+
+  cursor: pointer;
+
+  z-index: 4;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.favorite-button:hover {
+  transform:
+    scale(1.1);
+
+  border-color:
+    rgba(229, 9, 20, 0.7);
+
+  color: #ff3641;
+}
+
+
+.favorite-button.favorite-active {
+  border-color:
+    rgba(229, 9, 20, 0.5);
+
+  background:
+    rgba(229, 9, 20, 0.9);
+
+  color: white;
+}
+
+
+/* =========================
+   VIEW DETAILS OVER POSTER
+========================= */
+
+.poster-details-link {
+  position: absolute;
+
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+
+  padding:
+    12px 15px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.16);
+
+  border-radius: 10px;
+
+  opacity: 0;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  backdrop-filter:
+    blur(12px);
+
+  color: white;
+
+  text-align: center;
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  transform:
+    translateY(15px);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    background 0.2s ease;
+
+  z-index: 3;
+}
+
+
+.movie-card:hover
+.poster-details-link {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+.poster-details-link:hover {
+  background:
+    #e50914;
+}
+
+
+/* =========================
+   CARD CONTENT
+========================= */
+
+.movie-card-content {
+  padding:
+    18px 18px 17px;
+}
+
+
+.movie-card-content h2 {
+  margin:
+    0 0 9px;
+
+  overflow: hidden;
+
+  color: #f2f2f4;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  letter-spacing: -0.3px;
+}
+
+
+.movie-meta {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #747984;
+
+  font-size: 12px;
+}
+
+
+.meta-dot {
+  width: 3px;
+  height: 3px;
+
+  border-radius: 50%;
+
+  background: #494c55;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.movie-card-footer {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-top: 17px;
+
+  padding-top: 14px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.06);
+}
+
+
+.footer-rating {
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 4px;
+
+  color: white;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+.rating-star {
+  margin-right: 2px;
+
+  color: #ffc107;
+}
+
+
+.footer-rating small {
+  color: #60646e;
+
+  font-size: 10px;
+  font-weight: 500;
+}
+
+
+.favorite-text-button {
+  padding:
+    7px 11px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 8px;
+
+  background:
+    rgba(255, 255, 255, 0.045);
+
+  color: #a7aab1;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.favorite-text-button:hover {
+  border-color:
+    rgba(229, 9, 20, 0.35);
+
+  background:
+    rgba(229, 9, 20, 0.08);
+
+  color: #ff4b55;
+}
+
+
+.favorite-text-button.remove-favorite {
+  color: #ff525c;
+}
+
+
+/* =========================
+   NO POSTER
+========================= */
+
+.poster-placeholder {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #1b1c21,
+      #0f1013
+    );
+
+  color: #5d616b;
+}
+
+
+.poster-placeholder span {
+  font-size: 43px;
+}
+
+
+.poster-placeholder p {
+  margin: 0;
+
+  font-size: 12px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+  .movie-card {
+    border-radius: 15px;
+  }
+
+
+  .movie-card-content {
+    padding: 14px;
+  }
+
+
+  .movie-card-content h2 {
+    font-size: 15px;
+  }
+
+
+  .movie-rating-badge {
+    top: 10px;
+    left: 10px;
+  }
+
+
+  .favorite-button {
+    top: 10px;
+    right: 10px;
+
+    width: 35px;
+    height: 35px;
+  }
+
+
+  .poster-details-link {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+  }
+}
