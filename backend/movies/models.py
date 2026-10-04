@@ -74,7 +74,7 @@ class Seat(models.Model):
 
 class Booking(models.Model):
 
-   class Statue(models.TextChoices):
+   class Status(models.TextChoices):
       PENDING = "pending" , "Pending"
       CONFIRMED = "confirmed" , "Confirmed"
       CANCELLED = "cancelled" , "Cancelled"
@@ -88,8 +88,8 @@ class Booking(models.Model):
 
    status = models.CharField(
       max_length=20,
-      choices=Statue.choices,
-      default=Statue.PENDING
+      choices=Status.choices,
+      default=Status.PENDING
    )
 
    created_at = models.DateTimeField(

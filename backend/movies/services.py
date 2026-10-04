@@ -17,9 +17,12 @@ from .models import (
 # Internal helper
 # ==========================================
 
-def _expire_locked_booking(
+
+
+def _release_locked_booking(
     booking,
-    showtime_seats
+    showtime_seats,
+    new_status
 ):
     for showtime_seat in showtime_seats:
 
@@ -32,9 +35,7 @@ def _expire_locked_booking(
 
         showtime_seat.save()
 
-    booking.status = (
-        Booking.Status.EXPIRED
-    )
+    booking.status = new_status
 
     booking.save(
         update_fields=["status"]
@@ -158,9 +159,10 @@ def expire_booking(booking_id):
             .order_by("pk")
         )
 
-        _expire_locked_booking(
+        _release_locked_booking(
             booking,
-            showtime_seats
+            showtime_seats,
+            Booking.Status.EXPIRED
         )
 
         return booking
@@ -227,9 +229,10 @@ def confirm_booking(booking_id):
 
         if expired:
 
-            _expire_locked_booking(
+            _release_locked_booking(
                 booking,
-                showtime_seats
+                showtime_seats,
+                Booking.Status.EXPIRED
             )
 
         else:
@@ -259,3 +262,35 @@ def confirm_booking(booking_id):
         )
 
     return booking
+
+
+def cancel_booking(booking_id):
+
+    with transaction.atomic():
+
+        booking = (
+            Booking.bjects
+            .select_for_update()
+            .get(pk=booking_id)
+        )
+
+        if(booking.status != Booking.Status.PENDING):
+            raise BookingError(
+                "only pending booking can be cancelled."
+            )
+
+        showtime_seats = list(
+            ShowtimeSeat.objects
+            .select_for_update()
+            .filter(
+                booking=booking
+            )
+        )
+
+        _release_locked_booking(
+            booking,
+            showtime_seats,
+            Booking.Status.CANCELLED
+        )
+
+        return booking

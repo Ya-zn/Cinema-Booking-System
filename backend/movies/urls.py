@@ -8,7 +8,8 @@ HallListView,
 ShowTimeDetailView,
 BookingCreateView,
 BookingDetailView,
-BookingConfirmView
+BookingConfirmView,
+BookingCancelView
 )
 
 
@@ -21,5 +22,6 @@ urlpatterns = [
     path('showtimedetail/<int:pk>/', ShowTimeDetailView.as_view(), name= "showtime_detail"),
     path('bookings/', BookingCreateView.as_view(), name="booking_create"),
     path('bookings/<int:pk>/', BookingDetailView.as_view(), name="booking_detail"),
-    path('bookings/<int:pk>/confirm/', BookingConfirmView.as_view(), name="booking_confirm")
+    path('bookings/<int:pk>/confirm/', BookingConfirmView.as_view(), name="booking_confirm"),
+    path('bookings/<int:pk>/cancel', BookingCancelView.as_view(), name="booking_cancel")
 ]

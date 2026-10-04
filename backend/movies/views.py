@@ -6,8 +6,8 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 
 from .models import Movie, Showtime, Hall, Booking
-from .serializers import MovieSerializer, ShowTimeSerializer, HallSerializer, BookingCreateSerializer, BookingSerializer
-from .services import hold_seats , confirm_booking
+from .serializers import MovieSerializer, ShowtimeSerializer, HallSerializer, BookingCreateSerializer, BookingSerializer
+from .services import hold_seats , confirm_booking, cancel_booking
 from .exceptions import BookingError
 
 
@@ -97,7 +97,7 @@ class ShowTimeListView(APIView):
     def get(self, request):
         showtimes = Showtime.objects.all()
 
-        serializer = ShowTimeSerializer(
+        serializer = ShowtimeSerializer(
             showtimes,
             many=True
         )
@@ -106,7 +106,7 @@ class ShowTimeListView(APIView):
 
     def post(self, request):
 
-        serializer = ShowTimeSerializer(
+        serializer = ShowtimeSerializer(
             data = request.data
         )
 
@@ -135,7 +135,7 @@ class ShowTimeDetailView(APIView):
     def get(self, request, pk):
         showtime = self.get_object(pk)
 
-        serializer = ShowTimeSerializer(
+        serializer = ShowtimeSerializer(
             showtime
         )
 
@@ -146,7 +146,7 @@ class ShowTimeDetailView(APIView):
     def patch(self, request, pk):
         showtime = self.get_object(pk)
 
-        serializer = ShowTimeSerializer(
+        serializer = ShowtimeSerializer(
             showtime,
             data = request.data,
             partial = True
@@ -286,6 +286,33 @@ class BookingConfirmView(APIView):
             )
 
         serializer = BookingSerializer(
+            booking
+        )
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
+
+
+class BookingCancelView(APIView):
+
+    def post(self, request, pk):
+
+        try:
+            booking = cancel_booking(
+                booking_id= pk
+            )
+        except BookingError as error:
+            return Response(
+                {
+                    "error" : str(error)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = BookingSerializer(
+
             booking
         )
 
